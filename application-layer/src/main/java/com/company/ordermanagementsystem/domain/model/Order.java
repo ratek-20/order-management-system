@@ -1,4 +1,4 @@
-package com.company.ordermanagementsystem.model;
+package com.company.ordermanagementsystem.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,8 +15,7 @@ public class Order {
     private List<OrderItem> items;
     private BigDecimal totalAmount;
 
-    public Order(UUID id, UUID customerId, OrderStatus status, LocalDateTime orderDateTime, List<OrderItem> items, BigDecimal totalAmount) {
-        this.id = id;
+    public Order(UUID customerId, OrderStatus status, LocalDateTime orderDateTime, List<OrderItem> items, BigDecimal totalAmount) {
         this.customerId = customerId;
         this.status = status;
         this.orderDateTime = orderDateTime;

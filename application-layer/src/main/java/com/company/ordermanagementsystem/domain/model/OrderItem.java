@@ -1,4 +1,4 @@
-package com.company.ordermanagementsystem.model;
+package com.company.ordermanagementsystem.domain.model;
 
 import java.math.BigDecimal;
 import java.util.Objects;
