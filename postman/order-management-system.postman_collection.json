@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "9669e64c-6e75-42a6-a746-a66e2f320ac0",
+		"name": "Order Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22705792"
+	},
+	"item": [
+		{
+			"name": "get orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get order by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/orders/78b18ecd-2864-4792-bfe9-0b9e348af48b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"78b18ecd-2864-4792-bfe9-0b9e348af48b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"customerId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"items\": [\n    {\n      \"productId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"quantity\": 2,\n      \"unitPrice\": 10.5\n    },\n    {\n      \"productId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"quantity\": 1,\n      \"unitPrice\": 20.0\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete order",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"customerId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"items\": [\n    {\n      \"productId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"quantity\": 2,\n      \"unitPrice\": 10.5\n    },\n    {\n      \"productId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"quantity\": 1,\n      \"unitPrice\": 20.0\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/orders/78b18ecd-2864-4792-bfe9-0b9e348af48b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"78b18ecd-2864-4792-bfe9-0b9e348af48b"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
