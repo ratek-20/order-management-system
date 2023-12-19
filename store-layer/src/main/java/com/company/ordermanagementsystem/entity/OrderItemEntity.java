@@ -15,7 +15,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @NoArgsConstructor
-public class OrderItem {
+public class OrderItemEntity {
 
     @Id
     private UUID id;
@@ -28,9 +28,9 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false, referencedColumnName = "id", columnDefinition = "UUID")
-    private Order order;
+    private OrderEntity orderEntity;
 
-    public OrderItem(UUID id, int quantity, BigDecimal unitPrice) {
+    public OrderItemEntity(UUID id, int quantity, BigDecimal unitPrice) {
         this.id = id;
         this.quantity = quantity;
         this.unitPrice = unitPrice;

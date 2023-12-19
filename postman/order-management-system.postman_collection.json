@@ -56,7 +56,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"customerId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"items\": [\n    {\n      \"productId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"quantity\": 2,\n      \"unitPrice\": 10.5\n    },\n    {\n      \"productId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"quantity\": 1,\n      \"unitPrice\": 20.0\n    }\n  ]\n}",
+					"raw": "{\n  \"customerId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"items\": [\n    {\n      \"productId\": \"642d82ac-6641-42e6-8395-7400ec9ff8aa\",\n      \"quantity\": 2,\n      \"unitPrice\": 10.5\n    },\n    {\n      \"productId\": \"64575600-47f7-42ec-a479-4d7b85292a96\",\n      \"quantity\": 1,\n      \"unitPrice\": 20.0\n    }\n  ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"

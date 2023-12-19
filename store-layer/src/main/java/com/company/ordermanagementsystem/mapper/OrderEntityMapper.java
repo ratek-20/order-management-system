@@ -1,21 +1,22 @@
 package com.company.ordermanagementsystem.mapper;
 
-import com.company.ordermanagementsystem.entity.Order;
+import com.company.ordermanagementsystem.domain.model.Order;
+import com.company.ordermanagementsystem.entity.OrderEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderMapper {
+public class OrderEntityMapper {
 
-    private final OrderItemMapper orderItemMapper;
+    private final OrderItemEntityMapper orderItemEntityMapper;
 
     @Autowired
-    public OrderMapper(OrderItemMapper orderItemMapper) {
-        this.orderItemMapper = orderItemMapper;
+    public OrderEntityMapper(OrderItemEntityMapper orderItemEntityMapper) {
+        this.orderItemEntityMapper = orderItemEntityMapper;
     }
 
-    public Order mapToEntity(com.company.ordermanagementsystem.domain.model.Order orderModel) {
-        Order orderEntity = new Order(
+    public OrderEntity mapToEntity(Order orderModel) {
+        OrderEntity orderEntity = new OrderEntity(
                 orderModel.getCustomerId(),
                 orderModel.getStatus(),
                 orderModel.getCreatedAt(),
@@ -23,19 +24,19 @@ public class OrderMapper {
         );
         orderModel.getItems().forEach(
                 orderItem -> orderEntity.addItem(
-                        orderItemMapper.mapToEntity(orderItem)
+                        orderItemEntityMapper.mapToEntity(orderItem)
                 )
         );
         return orderEntity;
     }
 
-    public com.company.ordermanagementsystem.domain.model.Order mapToModel(Order orderEntity) {
-        com.company.ordermanagementsystem.domain.model.Order orderModel = new com.company.ordermanagementsystem.domain.model.Order(
+    public Order mapToModel(OrderEntity orderEntity) {
+        Order orderModel = new Order(
                 orderEntity.getCustomerId(),
                 orderEntity.getStatus(),
                 orderEntity.getCreatedAt(),
                 orderEntity.getItems().stream()
-                        .map(orderItemMapper::mapToModel)
+                        .map(orderItemEntityMapper::mapToModel)
                         .toList(),
                 orderEntity.getTotalAmount()
         );

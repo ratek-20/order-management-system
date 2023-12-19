@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Order {
+public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -37,24 +38,24 @@ public class Order {
     @Column(name = "total_amount", nullable = false, columnDefinition = "NUMERIC(10,2)")
     private BigDecimal totalAmount;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> items = List.of();
+    @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItemEntity> items = new ArrayList<>();
 
-    public Order(UUID customerId, OrderStatus status, LocalDateTime createdAt, BigDecimal totalAmount) {
+    public OrderEntity(UUID customerId, OrderStatus status, LocalDateTime createdAt, BigDecimal totalAmount) {
         this.customerId = customerId;
         this.status = status;
         this.createdAt = createdAt;
         this.totalAmount = totalAmount;
     }
 
-    public void addItem(OrderItem item) {
+    public void addItem(OrderItemEntity item) {
         items.add(item);
-        item.setOrder(this);
+        item.setOrderEntity(this);
     }
 
-    public void removeItem(OrderItem item) {
+    public void removeItem(OrderItemEntity item) {
         items.remove(item);
-        item.setOrder(null);
+        item.setOrderEntity(null);
     }
 
 }

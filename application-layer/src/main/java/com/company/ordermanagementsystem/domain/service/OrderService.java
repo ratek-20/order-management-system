@@ -31,15 +31,16 @@ public class OrderService implements OrderInPort {
 
     @Override
     public Optional<Order> getOrderById(UUID id) {
-        return Optional.empty();
+        return orderOutPort.getOrderById(id);
     }
 
     @Override
     public UUID createOrder(Order order) {
-        return UUID.randomUUID();
+        return orderOutPort.createOrder(order);
     }
 
     @Override
     public void deleteOrder(UUID id) {
+        orderOutPort.deleteOrder(id);
     }
 }

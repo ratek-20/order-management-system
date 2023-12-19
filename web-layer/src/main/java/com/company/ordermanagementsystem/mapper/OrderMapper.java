@@ -30,7 +30,8 @@ public class OrderMapper {
                         .map(orderItemMapper::toOrderItem)
                         .toList(),
                 createOrderRequest.items().stream()
-                        .map(OrderItemDTO::unitPrice)
+                        .map(orderItemDTO -> orderItemDTO.unitPrice()
+                                .multiply(BigDecimal.valueOf(orderItemDTO.quantity())))
                         .reduce(BigDecimal.ZERO, BigDecimal::add));
     }
 

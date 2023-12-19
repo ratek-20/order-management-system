@@ -1,7 +1,7 @@
 package com.company.ordermanagementsystem.adapter;
 
 import com.company.ordermanagementsystem.domain.model.Order;
-import com.company.ordermanagementsystem.mapper.OrderMapper;
+import com.company.ordermanagementsystem.mapper.OrderEntityMapper;
 import com.company.ordermanagementsystem.port.out.OrderOutPort;
 import com.company.ordermanagementsystem.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,29 +15,29 @@ import java.util.UUID;
 public class OrderStoreAdapter implements OrderOutPort {
 
     private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper;
+    private final OrderEntityMapper orderEntityMapper;
 
     @Autowired
-    public OrderStoreAdapter(OrderRepository orderRepository, OrderMapper orderMapper) {
+    public OrderStoreAdapter(OrderRepository orderRepository, OrderEntityMapper orderEntityMapper) {
         this.orderRepository = orderRepository;
-        this.orderMapper = orderMapper;
+        this.orderEntityMapper = orderEntityMapper;
     }
 
     @Override
     public List<Order> getAllOrders() {
         return orderRepository.findAll().stream()
-                .map(orderMapper::mapToModel)
+                .map(orderEntityMapper::mapToModel)
                 .toList();
     }
 
     @Override
     public Optional<Order> getOrderById(UUID id) {
-        return orderRepository.findById(id).map(orderMapper::mapToModel);
+        return orderRepository.findById(id).map(orderEntityMapper::mapToModel);
     }
 
     @Override
     public UUID createOrder(Order order) {
-        return orderRepository.save(orderMapper.mapToEntity(order)).getId();
+        return orderRepository.save(orderEntityMapper.mapToEntity(order)).getId();
     }
 
     @Override
