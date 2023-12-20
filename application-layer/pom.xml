@@ -8,10 +8,14 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>application-layer</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>application-layer</name>
     <description>application-layer</description>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>6.1.1</version>
+        </dependency>
     </dependencies>
 
 </project>
