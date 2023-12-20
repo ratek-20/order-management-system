@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface OrderInPort {
+public interface OrderApiInPort {
 
     List<Order> getAllOrders();
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface OrderOutPort {
+public interface OrderDaoOutPort {
 
     List<Order> getAllOrders();
 
@@ -15,4 +15,6 @@ public interface OrderOutPort {
     UUID createOrder(Order order);
 
     void deleteOrder(UUID id);
+
+    void updateOrder(Order order);
 }

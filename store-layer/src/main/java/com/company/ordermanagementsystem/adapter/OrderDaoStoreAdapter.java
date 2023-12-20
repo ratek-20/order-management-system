@@ -2,7 +2,7 @@ package com.company.ordermanagementsystem.adapter;
 
 import com.company.ordermanagementsystem.domain.model.Order;
 import com.company.ordermanagementsystem.mapper.OrderEntityMapper;
-import com.company.ordermanagementsystem.port.out.OrderOutPort;
+import com.company.ordermanagementsystem.port.out.OrderDaoOutPort;
 import com.company.ordermanagementsystem.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,13 +12,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class OrderStoreAdapter implements OrderOutPort {
+public class OrderDaoStoreAdapter implements OrderDaoOutPort {
 
     private final OrderRepository orderRepository;
     private final OrderEntityMapper orderEntityMapper;
 
     @Autowired
-    public OrderStoreAdapter(OrderRepository orderRepository, OrderEntityMapper orderEntityMapper) {
+    public OrderDaoStoreAdapter(OrderRepository orderRepository, OrderEntityMapper orderEntityMapper) {
         this.orderRepository = orderRepository;
         this.orderEntityMapper = orderEntityMapper;
     }
@@ -43,5 +43,10 @@ public class OrderStoreAdapter implements OrderOutPort {
     @Override
     public void deleteOrder(UUID id) {
         orderRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateOrder(Order order) {
+        orderRepository.save(orderEntityMapper.mapToEntity(order));
     }
 }

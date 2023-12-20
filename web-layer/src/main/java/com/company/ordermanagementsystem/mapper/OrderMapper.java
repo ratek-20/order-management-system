@@ -5,7 +5,6 @@ import com.company.ordermanagementsystem.domain.model.Order;
 import com.company.ordermanagementsystem.domain.model.OrderStatus;
 import com.company.ordermanagementsystem.dto.CreateOrderRequest;
 import com.company.ordermanagementsystem.dto.OrderDTO;
-import com.company.ordermanagementsystem.dto.OrderItemDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
