@@ -1,10 +1,13 @@
 package com.company.ordermanagementsystem.domain.service;
 
 import com.company.ordermanagementsystem.domain.model.Order;
+import com.company.ordermanagementsystem.domain.service.objectmother.OrderObjectMother;
 import com.company.ordermanagementsystem.port.out.OrderDaoOutPort;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,49 +17,59 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 class OrderApiServiceTest {
 
+    @InjectMocks
     private OrderApiService orderApiService;
+    @Mock
     private OrderDaoOutPort orderDaoOutPort;
+
+    private AutoCloseable autoCloseable;
 
     @BeforeEach
     public void setup() {
-        orderDaoOutPort = Mockito.mock(OrderDaoOutPort.class);
-        orderApiService = new OrderApiService(orderDaoOutPort);
+        autoCloseable = openMocks(this);
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        autoCloseable.close();
     }
 
     @Test
     public void testGetAllOrders() {
-        List<Order> orders = Collections.singletonList(Mockito.mock(Order.class));
-        when(orderDaoOutPort.getAllOrders()).thenReturn(orders);
+        List<Order> expected = Collections.singletonList(OrderObjectMother.aRandomOrder());
+        when(orderDaoOutPort.getAllOrders()).thenReturn(expected);
 
-        List<Order> result = orderApiService.getAllOrders();
+        List<Order> actual = orderApiService.getAllOrders();
 
-        assertEquals(orders, result);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testGetOrderById() {
         UUID uuid = UUID.randomUUID();
-        Order order = Mockito.mock(Order.class);
-        when(orderDaoOutPort.getOrderById(uuid)).thenReturn(Optional.of(order));
+        Order order = OrderObjectMother.aRandomOrder();
+        Optional<Order> expected = Optional.of(order);
+        when(orderDaoOutPort.getOrderById(uuid)).thenReturn(expected);
 
-        Optional<Order> result = orderApiService.getOrderById(uuid);
+        Optional<Order> actual = orderApiService.getOrderById(uuid);
 
-        assertEquals(Optional.of(order), result);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testCreateOrder() {
-        Order order = Mockito.mock(Order.class);
-        UUID uuid = UUID.randomUUID();
-        when(orderDaoOutPort.createOrder(order)).thenReturn(uuid);
+        Order order = OrderObjectMother.aRandomOrder();
+        UUID expected = UUID.randomUUID();
+        when(orderDaoOutPort.createOrder(order)).thenReturn(expected);
 
-        UUID result = orderApiService.createOrder(order);
+        UUID actual = orderApiService.createOrder(order);
 
         verify(orderDaoOutPort).createOrder(order);
-        assertEquals(uuid, result);
+        assertEquals(expected, actual);
     }
 
     @Test
