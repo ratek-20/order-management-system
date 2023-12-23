@@ -1,10 +1,19 @@
 package com.company.ordermanagementsystem.mapper;
 
 import com.company.ordermanagementsystem.domain.model.Order;
+import com.company.ordermanagementsystem.domain.model.OrderItem;
 import com.company.ordermanagementsystem.domain.model.OrderStatus;
+import com.company.ordermanagementsystem.domain.service.objectmother.OrderItemObjectMother;
+import com.company.ordermanagementsystem.domain.service.objectmother.OrderObjectMother;
 import com.company.ordermanagementsystem.entity.OrderEntity;
+import com.company.ordermanagementsystem.entity.OrderItemEntity;
+import com.company.ordermanagementsystem.objectmother.OrderEntityObjectMother;
+import com.company.ordermanagementsystem.objectmother.OrderItemEntityObjectMother;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
@@ -13,50 +22,79 @@ import java.util.Collections;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 public class OrderEntityMapperTest {
 
+    @InjectMocks
     private OrderEntityMapper orderEntityMapper;
+
+    @Mock
     private OrderItemEntityMapper orderItemEntityMapper;
+
+    private AutoCloseable autoCloseable;
 
     @BeforeEach
     public void setup() {
-        orderItemEntityMapper = Mockito.mock(OrderItemEntityMapper.class);
-        orderEntityMapper = new OrderEntityMapper(orderItemEntityMapper);
+        autoCloseable = openMocks(this);
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        autoCloseable.close();
     }
 
     @Test
-    public void testMapToEntity() {
-        Order order = Mockito.mock(Order.class);
-        when(order.getCustomerId()).thenReturn(UUID.randomUUID());
-        when(order.getStatus()).thenReturn(OrderStatus.SHIPPED);
-        when(order.getCreatedAt()).thenReturn(LocalDateTime.now());
-        when(order.getTotalAmount()).thenReturn(BigDecimal.valueOf(100.0));
-        when(order.getItems()).thenReturn(Collections.emptyList());
+    void itShouldMapToEntity() {
+        Order order = OrderObjectMother.aRandomOrder();
+        OrderItem orderItem = OrderItemObjectMother.aRandomOrderItem();
+        order.setItems(Collections.singletonList(orderItem));
+        OrderItemEntity orderItemEntity = OrderItemEntityObjectMother.aRandomOrderItemEntity();
+        when(orderItemEntityMapper.mapToEntity(orderItem)).thenReturn(orderItemEntity);
+        UUID expectedCustomerId = order.getCustomerId();
+        OrderStatus expectedStatus = order.getStatus();
+        LocalDateTime expectedCreatedAt = order.getCreatedAt();
+        BigDecimal expectedTotalAmount = order.getTotalAmount();
 
         OrderEntity orderEntity = orderEntityMapper.mapToEntity(order);
+        UUID actualCustomerId = orderEntity.getCustomerId();
+        OrderStatus actualStatus = orderEntity.getStatus();
+        LocalDateTime actualCreatedAt = orderEntity.getCreatedAt();
+        BigDecimal actualTotalAmount = orderEntity.getTotalAmount();
 
-        assertEquals(order.getCustomerId(), orderEntity.getCustomerId());
-        assertEquals(order.getStatus(), orderEntity.getStatus());
-        assertEquals(order.getCreatedAt(), orderEntity.getCreatedAt());
-        assertEquals(order.getTotalAmount(), orderEntity.getTotalAmount());
+        assertEquals(expectedCustomerId, actualCustomerId);
+        assertEquals(expectedStatus, actualStatus);
+        assertEquals(expectedCreatedAt, actualCreatedAt);
+        assertEquals(expectedTotalAmount, actualTotalAmount);
+        assertTrue(orderEntity.getItems().contains(orderItemEntity));
+        assertEquals(1, orderEntity.getItems().size());
     }
 
     @Test
-    public void testMapToModel() {
-        OrderEntity orderEntity = Mockito.mock(OrderEntity.class);
-            when(orderEntity.getCustomerId()).thenReturn(UUID.randomUUID());
-        when(orderEntity.getStatus()).thenReturn(OrderStatus.CANCELLED);
-        when(orderEntity.getCreatedAt()).thenReturn(LocalDateTime.now());
-        when(orderEntity.getTotalAmount()).thenReturn(BigDecimal.valueOf(100.0));
-        when(orderEntity.getItems()).thenReturn(Collections.emptyList());
+    void itShouldMapToModel() {
+        OrderEntity orderEntity = OrderEntityObjectMother.aRandomOrderEntity();
+        OrderItemEntity orderItemEntity = OrderItemEntityObjectMother.aRandomOrderItemEntity();
+        orderEntity.setItems(Collections.singletonList(orderItemEntity));
+        OrderItem orderItem = OrderItemObjectMother.aRandomOrderItem();
+        when(orderItemEntityMapper.mapToModel(orderItemEntity)).thenReturn(orderItem);
+        UUID expectedCustomerId = orderEntity.getCustomerId();
+        OrderStatus expectedStatus = orderEntity.getStatus();
+        LocalDateTime expectedCreatedAt = orderEntity.getCreatedAt();
+        BigDecimal expectedTotalAmount = orderEntity.getTotalAmount();
 
         Order order = orderEntityMapper.mapToModel(orderEntity);
+        UUID actualCustomerId = order.getCustomerId();
+        OrderStatus actualStatus = order.getStatus();
+        LocalDateTime actualCreatedAt = order.getCreatedAt();
+        BigDecimal actualTotalAmount = order.getTotalAmount();
 
-        assertEquals(orderEntity.getCustomerId(), order.getCustomerId());
-        assertEquals(orderEntity.getStatus(), order.getStatus());
-        assertEquals(orderEntity.getCreatedAt(), order.getCreatedAt());
-        assertEquals(orderEntity.getTotalAmount(), order.getTotalAmount());
+        assertEquals(expectedCustomerId, actualCustomerId);
+        assertEquals(expectedStatus, actualStatus);
+        assertEquals(expectedCreatedAt, actualCreatedAt);
+        assertEquals(expectedTotalAmount, actualTotalAmount);
+        assertTrue(order.getItems().contains(orderItem));
+        assertEquals(1, order.getItems().size());
     }
 }

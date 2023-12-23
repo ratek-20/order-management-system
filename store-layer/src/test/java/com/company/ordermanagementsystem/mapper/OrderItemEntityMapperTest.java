@@ -1,7 +1,11 @@
 package com.company.ordermanagementsystem.mapper;
 
 import com.company.ordermanagementsystem.domain.model.OrderItem;
+import com.company.ordermanagementsystem.domain.service.objectmother.OrderItemObjectMother;
+import com.company.ordermanagementsystem.entity.OrderEntity;
 import com.company.ordermanagementsystem.entity.OrderItemEntity;
+import com.company.ordermanagementsystem.objectmother.OrderEntityObjectMother;
+import com.company.ordermanagementsystem.objectmother.OrderItemEntityObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,36 +19,43 @@ public class OrderItemEntityMapperTest {
 
     private OrderItemEntityMapper orderItemEntityMapper;
 
+
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         orderItemEntityMapper = new OrderItemEntityMapper();
     }
 
     @Test
-    public void testMapToModel() {
-        OrderItemEntity orderItemEntity = Mockito.mock(OrderItemEntity.class);
-        Mockito.when(orderItemEntity.getId()).thenReturn(UUID.randomUUID());
-        Mockito.when(orderItemEntity.getQuantity()).thenReturn(2);
-        Mockito.when(orderItemEntity.getUnitPrice()).thenReturn(BigDecimal.valueOf(100.0));
+    void itShouldMapToModel() {
+        OrderItemEntity orderItemEntity = OrderItemEntityObjectMother.aRandomOrderItemEntity();
+        UUID expectedId = orderItemEntity.getId();
+        int expectedQuantity = orderItemEntity.getQuantity();
+        BigDecimal expectedUnitPrice = orderItemEntity.getUnitPrice();
 
         OrderItem orderItem = orderItemEntityMapper.mapToModel(orderItemEntity);
+        UUID actualId = orderItem.getProductId();
+        int actualQuantity = orderItem.getQuantity();
+        BigDecimal actualUnitPrice = orderItem.getUnitPrice();
 
-        assertEquals(orderItemEntity.getId(), orderItem.getProductId());
-        assertEquals(orderItemEntity.getQuantity(), orderItem.getQuantity());
-        assertEquals(orderItemEntity.getUnitPrice(), orderItem.getUnitPrice());
+        assertEquals(expectedId, actualId);
+        assertEquals(expectedQuantity, actualQuantity);
+        assertEquals(expectedUnitPrice, actualUnitPrice);
     }
 
     @Test
-    public void testMapToEntity() {
-        OrderItem orderItem = Mockito.mock(OrderItem.class);
-        Mockito.when(orderItem.getProductId()).thenReturn(UUID.randomUUID());
-        Mockito.when(orderItem.getQuantity()).thenReturn(2);
-        Mockito.when(orderItem.getUnitPrice()).thenReturn(BigDecimal.valueOf(100.0));
+    void itShouldMapToEntity() {
+        OrderItem orderItem = OrderItemObjectMother.aRandomOrderItem();
+        UUID expectedId = orderItem.getProductId();
+        int expectedQuantity = orderItem.getQuantity();
+        BigDecimal expectedUnitPrice = orderItem.getUnitPrice();
 
         OrderItemEntity orderItemEntity = orderItemEntityMapper.mapToEntity(orderItem);
+        UUID actualId = orderItemEntity.getId();
+        int actualQuantity = orderItemEntity.getQuantity();
+        BigDecimal actualUnitPrice = orderItemEntity.getUnitPrice();
 
-        assertEquals(orderItem.getProductId(), orderItemEntity.getId());
-        assertEquals(orderItem.getQuantity(), orderItemEntity.getQuantity());
-        assertEquals(orderItem.getUnitPrice(), orderItemEntity.getUnitPrice());
+        assertEquals(expectedId, actualId);
+        assertEquals(expectedQuantity, actualQuantity);
+        assertEquals(expectedUnitPrice, actualUnitPrice);
     }
 }

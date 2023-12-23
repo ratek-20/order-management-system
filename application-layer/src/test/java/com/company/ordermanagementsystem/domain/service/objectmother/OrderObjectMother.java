@@ -16,7 +16,7 @@ public class OrderObjectMother {
                 UUID.randomUUID(),
                 OrderStatus.PENDING,
                 LocalDateTime.now(),
-                new ArrayList<OrderItem>(),
+                new ArrayList<>(),
                 BigDecimal.valueOf(0)
         );
     }
