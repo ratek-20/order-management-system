@@ -8,6 +8,8 @@ It handles operations such as creating, fetching, and deleting orders, as well a
 
 ## 🏗️ Architecture
 
+![Architecture](./docs/order-management-system.png)
+
 The system is structured into **five main layers**:
 
 ### 1. Web Layer
@@ -33,7 +35,7 @@ The system is structured into **five main layers**:
 ---
 
 
-##  Technology
+## 🔧 Technology
 
 | Component                | Technology     |
 | ------------------------ | -------------- |
@@ -43,7 +45,10 @@ The system is structured into **five main layers**:
 | **Application Server**   | Tomcat         |
 | **Testing**              | JUnit, Mockito |
 
-## Getting Started
+---
+
+
+## 💻 Getting Started
 
 ### Clone the repository
 git clone https://github.com/your-username/order-management-system.git
